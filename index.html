@@ -38,9 +38,62 @@
             background-color: #e9e9e9;
             border-color: #0053a0;
         }
+        .description {
+            font-size: 18px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 25px 15px;
+        }
+
+        #englishDescription,
+        #ukrainianDescription {
+            max-width: 100%;
+            word-wrap: break-word;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            height: auto;
+            margin: 5px;
+}
     </style>
 </head>
 <body>
+    
+    <div class="description">
+        <p id="englishDescription" style="display: block;">
+            <b>Завдання таке:</b><br />
+            У момент завантаження html сторінки до body автоматично додаються 100 div елементів висотою 100 пікселів.<br /> Кожен div містить унікальний текст, наприклад, div1, div2 і т.д.<br /> 
+            Текст знаходиться в центрі елемента по горизонталі та по вертикалі.<br />
+            При першому кліку на будь-якому div елементі він повинен бути переміщений на першу позицію body, при повторному кліку на цьому ж елементі - повернений на свою вихідну позицію.<br />
+            Наприклад, користувач натискає на div, який знаходиться на позиції з індексом 5.<br /> 
+            Він повинен переміститися і стати першим div в body.<br />
+            Якщо повторно натиснути на цьому ж div (тепер він знаходиться в позиції з індексом 0) він повинен повернутися на своє початкове положення з індексом 5.<br />
+            <b>Додаткові вимоги:</b><br />
+            При розробці коду не використовувати жодних сторонніх бібліотек та фреймворків, тільки plain JavaScript;<br />
+            користувач може клікати на div елементах у будь-якій послідовності, не обов'язково підряд на тому самому елементі;<br />
+            необхідно забезпечити роботу у тому числі й у мобільних браузерах;<br />
+            результат роботи оформіть як одного html файлу без зовнішніх залежностей;<br />
+            <b>Примітка:</b><br /> 
+            якщо завдання не до кінця зрозумілі якісь вимоги, можна трактувати їх за власним розумінням. Додайте в цьому випадку своє трактування завдання у вигляді коментарів у коді.
+        </p>
+        <p id="ukrainianDescription" style="display: none;">
+            <b>The task is as follows:</b><br />
+            When the html page is loaded, 100 div elements with a height of 100 pixels are automatically added to the body.<br /> 
+            Each div contains unique text, for example div1, div2, etc. The text is centered on the element horizontally and vertically.<br />
+            When you first click on any div element, it should be moved to the first body position, when you click again on the same element, it should be returned to its original position.<br />
+            For example, the user clicks on a div that is at position index 5. It should move and become the first div in the body.<br />
+            If you click again on the same div (now at position index 0) it should return to its original position at index 5.<br />
+            <b>Additional requirements:</b><br />
+            when developing the code, do not use any third-party libraries and frameworks, only plain JavaScript;<br />
+            the user can click on div elements in any sequence, not necessarily consecutively on the same element;<br />
+            it is necessary to ensure work, including in mobile browsers;<br />
+            format the work result as one html file without external dependencies;<br />
+            <b>Note:</b><br /> 
+            if the task does not fully understand any requirements, you can interpret them according to your own understanding. In this case, add your interpretation of the task in the form of comments in the code.
+        </p>
+        <button id="toggleLanguage">Click Me</button>
+    </div>
     <div id="app"></div>
     <script>
         const createDivElements = (count) => {
@@ -68,6 +121,7 @@
             const divElements = createDivElements(divCount);
             // Represents the current order of divs
             let order = Array.from({ length: divCount }, (_, i) => i); 
+            let currentLanguage = 'English';
 
             divElements.forEach((div, index) => {
                 div.addEventListener("click", () => {
@@ -92,6 +146,21 @@
                     }
                 });
                 body.appendChild(div);
+            });
+
+            toggleLanguage.addEventListener("click", () => {
+                // Toggle between English and Ukrainian
+                if (currentLanguage === 'English') {
+                    currentLanguage = 'Ukrainian';
+                    englishDescription.style.display = 'none';
+                    ukrainianDescription.style.display = 'block';
+                    toggleLanguage.textContent = 'Switch Language (UA)';
+                } else {
+                    currentLanguage = 'English';
+                    englishDescription.style.display = 'block';
+                    ukrainianDescription.style.display = 'none';
+                    toggleLanguage.textContent = 'Перемкнути мову (EN)';
+                }
             });
         });
     </script>
