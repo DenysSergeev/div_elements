@@ -27,9 +27,7 @@
 <body>
     <div id="app"></div>
     <script>
-        document.addEventListener("DOMContentLoaded", () => {
-
-            const createDivElements = (count) => {
+        const createDivElements = (count) => {
                 const divElements = [];
                 for (let i = 0; i < count; i++) {
                     const div = document.createElement("div");
@@ -39,7 +37,47 @@
                 }
                 return divElements;
             }
-        })
+
+            const rearrangeDivs = (container, divElements, order) => {
+                // Clear the container and add divs in the updated order
+                container.innerHTML = "";
+                order.forEach((index) => {
+                    container.appendChild(divElements[index]);
+                });
+            }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const body = document.getElementById("app");
+            const divCount = 100;
+            const divElements = createDivElements(divCount);
+            // Represents the current order of divs
+            let order = Array.from({ length: divCount }, (_, i) => i); 
+
+            divElements.forEach((div, index) => {
+                div.addEventListener("click", () => {
+                    if (order !== index) {
+                        // Clicked on a div that's not at index 0
+                        const currentIndex = order.indexOf(index);
+                        const firstIndex = order.indexOf(0);
+
+                        // Swap the positions of the clicked div and the div at index 0
+                        order[currentIndex] = 0;
+                        order[firstIndex] = index;
+                        div.classList.add("active-div");
+
+                        divElements.forEach((el, i) => {
+                            if (i !== currentIndex) {
+                            el.classList.remove("active-div");
+                            }
+                        });
+
+                        // Rearrange the divs based on the updated order
+                        rearrangeDivs(body, divElements, order);
+                    }
+                });
+                body.appendChild(div);
+            });
+        });
     </script>
 </body>
 </html>
